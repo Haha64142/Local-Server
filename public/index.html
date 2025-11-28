@@ -20,6 +20,9 @@
       const submitBtn = document.getElementById("submitBtn");
       const downloadBtn = document.getElementById("downloadBtn");
 
+      const maxFileSizeMB = 256;
+      const maxFileSizeBytes = maxFileSizeMB * 1024 * 1024;
+
       window.onload = function () {
         try {
           fetch("/wake")
@@ -41,6 +44,17 @@
           alert(err.stack);
         }
       };
+
+      dataInput.addEventListener("change", () => {
+        if (dataInput.files.length > 0) {
+          if (dataInput.files[0].size > maxFileSizeBytes) {
+            alert(
+              `File size exceeds the maximum limit of ${maxFileSizeMB} MB. Please select a smaller file.`
+            );
+            dataInput.value = "";
+          }
+        }
+      });
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
