@@ -1,0 +1,46 @@
+html,
+body {
+  background-color: #212121;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 4px;
+  padding: 0;
+}
+
+form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+input {
+  background-color: #303030;
+  border: none;
+  border-radius: 6px;
+  color: white;
+}
+
+button {
+  background-color: #303030;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #454545;
+  cursor: pointer;
+}
+
+button:active{
+  background-color: #3b3b3b;
+}
+
+button:disabled {
+  background-color: #282828;
+  cursor: not-allowed;
+  opacity: 0.6;
+}

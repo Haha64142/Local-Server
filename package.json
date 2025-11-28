@@ -1,0 +1,23 @@
+{
+  "name": "local-server",
+  "version": "1.0.0",
+  "description": "A local server for transmitting files over LAN",
+  "homepage": "https://github.com/Haha64142/Local-Server#readme",
+  "bugs": {
+    "url": "https://github.com/Haha64142/Local-Server/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Haha64142/Local-Server.git"
+  },
+  "license": "ISC",
+  "author": "Haha64142",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

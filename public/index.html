@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Local Server</title>
+  </head>
+  <body>
+    <form id="dataForm">
+      <label for="dataInput">Upload File:</label>
+      <input type="file" id="dataInput" name="dataInput" required />
+      <button type="submit">Submit</button>
+    </form>
+    <div id="response">
+      <button id="downloadResponse">Download Response</button>
+    </div>
+    <script>
+      const form = document.getElementById("dataForm");
+      const dataInput = document.getElementById("dataInput");
+      const downloadBtn = document.getElementById("downloadResponse");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const response = await fetch("/data", {
+          method: "POST",
+          headers: {
+            "x-filename": dataInput.files[0].name,
+          },
+          body: dataInput.files[0],
+        });
+
+        if (response.ok) {
+          alert("File uploaded successfully!");
+        } else {
+          alert("File upload failed.");
+        }
+      });
+
+      downloadBtn.addEventListener("click", async () => {
+        const response = await fetch("/data");
+        if (!response.ok) {
+          alert("No data available to download.");
+          return;
+        }
+
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+
+        let filename = "response.bin";
+        const disposition = response.headers.get("Content-Disposition");
+        if (disposition && disposition.includes("filename=")) {
+          filename = disposition.split("filename=")[1].replace(/"/g, "");
+        }
+
+        a.download = filename;
+
+        document.body.appendChild(a);
+        a.click();
+
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        alert("Response downloaded.");
+      });
+    </script>
+  </body>
+</html>
