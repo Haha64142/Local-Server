@@ -24,6 +24,7 @@ input {
 }
 
 button {
+  width: fit-content;
   background-color: #303030;
   color: #fff;
   border: none;
@@ -35,7 +36,7 @@ button:hover {
   cursor: pointer;
 }
 
-button:active{
+button:active {
   background-color: #3b3b3b;
 }
 

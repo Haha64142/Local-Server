@@ -10,15 +10,37 @@
     <form id="dataForm">
       <label for="dataInput">Upload File:</label>
       <input type="file" id="dataInput" name="dataInput" required />
-      <button type="submit">Submit</button>
+      <button type="submit" id="submitBtn" disabled>Submit</button>
     </form>
-    <div id="response">
-      <button id="downloadResponse">Download Response</button>
-    </div>
+    <button id="downloadBtn" disabled>Download Response</button>
+
     <script>
       const form = document.getElementById("dataForm");
       const dataInput = document.getElementById("dataInput");
-      const downloadBtn = document.getElementById("downloadResponse");
+      const submitBtn = document.getElementById("submitBtn");
+      const downloadBtn = document.getElementById("downloadBtn");
+
+      window.onload = function () {
+        try {
+          fetch("/wake")
+            .then((r) => r.text())
+            .then((body) => {
+              if (body == "App is awake") {
+                submitBtn.disabled = false;
+                downloadBtn.disabled = false;
+              } else {
+                alert(body);
+              }
+            })
+            .catch((err) => {
+              console.log(err.stack);
+              alert(err.stack);
+            });
+        } catch (err) {
+          console.log(err.stack);
+          alert(err.stack);
+        }
+      };
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();

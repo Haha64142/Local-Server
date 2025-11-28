@@ -30,6 +30,13 @@ app.get("/data", async (req, res) => {
   res.send(data);
 });
 
+app.use(express.text());
+
+// For waking up a render application
+app.get("/wake", (req, res) => {
+  res.send("App is awake");
+});
+
 app.use(express.static(path.join(__dirname, "public")));
 
 const server = app.listen(port, () => {
