@@ -34,8 +34,12 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const server = app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
-  console.log("\nPress Enter to stop the server");
-  waitForInput();
+
+  // Only do this when running locally
+  if (!process.env.RENDER) {
+    console.log("\nPress Enter to stop the server");
+    waitForInput();
+  }
 });
 
 function waitForInput() {
