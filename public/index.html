@@ -62,6 +62,7 @@
         const response = await fetch("/data", {
           method: "POST",
           headers: {
+            "Content-Type": "application/octet-stream",
             "x-filename": dataInput.files[0].name,
           },
           body: dataInput.files[0],

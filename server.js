@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 let data;
 let filename;
 
-app.use(express.raw({ type: "*/*", limit: "256mb" })); // 256mb or 0.25bg
+app.use(express.raw({ type: "application/octet-stream", limit: "256mb" })); // 256mb or 0.25bg
 
 app.post("/data", async (req, res) => {
   data = req.body;
