@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -10,14 +10,12 @@
     <form id="dataForm">
       <label for="dataInput">Upload File:</label>
       <input type="file" id="dataInput" name="dataInput" required />
-      <button type="submit" id="submitBtn" disabled>Submit</button>
     </form>
     <button id="downloadBtn" disabled>Download Response</button>
 
     <script>
       const form = document.getElementById("dataForm");
       const dataInput = document.getElementById("dataInput");
-      const submitBtn = document.getElementById("submitBtn");
       const downloadBtn = document.getElementById("downloadBtn");
 
       const maxFileSizeMB = 256;
@@ -29,7 +27,6 @@
             .then((r) => r.text())
             .then((body) => {
               if (body == "App is awake") {
-                submitBtn.disabled = false;
                 downloadBtn.disabled = false;
               } else {
                 alert(body);
@@ -45,33 +42,30 @@
         }
       };
 
-      dataInput.addEventListener("change", () => {
+      dataInput.addEventListener("change", async () => {
         if (dataInput.files.length > 0) {
           if (dataInput.files[0].size > maxFileSizeBytes) {
             alert(
-              `File size exceeds the maximum limit of ${maxFileSizeMB} MB. Please select a smaller file.`
+              `File size exceeds the maximum limit of ${maxFileSizeMB} MB. Please select a smaller file.`,
             );
             dataInput.value = "";
+            return;
           }
-        }
-      });
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+          const response = await fetch("/data", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/octet-stream",
+              "x-filename": dataInput.files[0].name,
+            },
+            body: dataInput.files[0],
+          });
 
-        const response = await fetch("/data", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/octet-stream",
-            "x-filename": dataInput.files[0].name,
-          },
-          body: dataInput.files[0],
-        });
-
-        if (response.ok) {
-          alert("File uploaded successfully!");
-        } else {
-          alert("File upload failed.");
+          if (response.ok) {
+            alert("File uploaded successfully!");
+          } else {
+            alert("File upload failed.");
+          }
         }
       });
 
@@ -101,8 +95,6 @@
 
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-
-        alert("Response downloaded.");
       });
     </script>
   </body>

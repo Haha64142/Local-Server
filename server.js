@@ -17,6 +17,7 @@ app.use(express.raw({ type: "application/octet-stream", limit: "256mb" })); // 2
 app.post("/data", async (req, res) => {
   data = req.body;
   filename = req.headers["x-filename"] || "response.bin";
+  console.log("Recieved file: '" + filename + "' successfully");
   res.sendStatus(200);
 });
 
