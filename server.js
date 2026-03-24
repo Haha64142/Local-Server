@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import readline from "readline";
 import { fileURLToPath } from "url";
+import { networkInterfaces } from "os";
 
 const app = express();
 const port = process.env.PORT || 80;
@@ -41,7 +42,16 @@ app.get("/wake", (req, res) => {
 app.use(express.static(path.join(__dirname, "public")));
 
 const server = app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  const nets = networkInterfaces();
+  const results = Object.values(nets)
+    .flat()
+    .filter((net) => net.family === "IPv4" && !net.internal)
+    .map(({ address }) => address);
+
+  console.log(
+    `Server is running on \x1b[36mport ${port}\x1b[0m at the following ip addresses:`,
+  );
+  console.log("\x1b[32m" + results.join("\x1b[0m, \x1b[32m") + "\x1b[0m");
 
   // Only do this when running locally
   if (!process.env.RENDER) {

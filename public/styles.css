@@ -7,28 +7,35 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin: 4px;
+  margin: 0.25rem;
   padding: 0;
 }
 
 form {
+  padding: 0.5rem;
   display: flex;
+  justify-items: center;
+  align-items: center;
   gap: 0.5rem;
 }
 
 input {
+  font-size: 1em;
+  padding: 0.5rem;
   background-color: #303030;
   border: none;
-  border-radius: 6px;
+  border-radius: 0.5rem;
   color: white;
 }
 
 button {
+  font-size: 1em;
   width: fit-content;
+  padding: 0.5rem;
   background-color: #303030;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 0.5rem;
 }
 
 button:hover {
